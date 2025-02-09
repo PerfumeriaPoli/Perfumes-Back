@@ -79,6 +79,7 @@
     "src/**/*.ts",
     "spec/**/*.ts",
     "scripts",
+    "build.ts",
     "preload.js"
   ],
   "exclude": [
