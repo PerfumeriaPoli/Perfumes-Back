@@ -1,0 +1,16 @@
+Usuarios:
+
+{
+  "nombre": "juan",
+  "email": "juanchi.sampieri@gmail.com",
+  "contrasenia": "a",
+  "isAdmin": false
+}
+
+Perfumes:
+
+
+{
+  "nombre": "defdafagfsdgsgsbgsddsrp",
+  "notas": "dea, dea, dea"
+}
