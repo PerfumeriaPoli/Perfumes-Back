@@ -4,8 +4,8 @@ import { IReq, IRes } from './types/express/misc';
 import PerfumeService from '@src/services/PerfumeService';
 
 async function getPerfume(req: IReq, res: IRes) {
-    const id = +req.params.id;
-    const perfume = await PerfumeService.getPerfume(id);
+    const idPerfume = +req.params.idPerfume;
+    const perfume = await PerfumeService.getPerfume(idPerfume);
     res.status(HttpStatusCodes.OK).json(perfume);
 }
 

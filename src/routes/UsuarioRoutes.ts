@@ -23,7 +23,7 @@ async function login(req: IReq, res: IRes) {
     const usuario = req.body;
     const token = await UsuarioService.login(usuario);
     if(token) {
-        res.status(HttpStatusCodes.OK).json({ token });
+        res.status(HttpStatusCodes.OK).json(token);
     } else {
         res.status(HttpStatusCodes.UNAUTHORIZED).json({ message: 'Invalid credentials' });
     }

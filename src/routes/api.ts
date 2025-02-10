@@ -34,6 +34,12 @@ usuarioRouter.post(
 //* Perfumes
 
 perfumeRouter.get(
+    Paths.Perfumes.GetOne,
+    checkToken,
+    PerfumeRoutes.getPerfume
+);
+
+perfumeRouter.get(
     Paths.Perfumes.GetPorPagina,
     checkToken,
     PerfumeRoutes.getPerfumesPorPagina
@@ -112,7 +118,13 @@ clasificacionRouter.post(
 clasificacionRouter.get(
     Paths.Clasificaciones.GetAll,
     checkToken,
-    ClasificacionRoutes.getClasificaciones
+    ClasificacionRoutes.getAllClasificaciones
+)
+
+clasificacionRouter.get(
+    Paths.Clasificaciones.GetOne,
+    checkToken,
+    ClasificacionRoutes.getClasificacion
 )
 
 clasificacionRouter.delete(

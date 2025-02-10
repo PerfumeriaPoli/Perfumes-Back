@@ -19,9 +19,9 @@ export default {
   },
   Perfumes: {
     Base: '/perfumes',
-    GetPorPagina: '/:pagina',
+    GetPorPagina: '/all/:pagina',
     Buscar: '/buscar/:nombre',
-    GetOne: '/:id',
+    GetOne: '/:idPerfume',
     Add: '/add',
     Update: '/update/:idPerfume',
     Delete: '/delete/:idPerfume',
@@ -38,7 +38,8 @@ export default {
   },
   Clasificaciones: {
     Base: '/clasificaciones',
-    GetAll: '/all',
+    GetAll: '/all/:idPerfume',
+    GetOne: '/:idPerfume',
     Add: '/add',
     Delete: '/delete',
   },

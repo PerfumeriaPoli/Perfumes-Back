@@ -2,6 +2,18 @@ import HttpStatusCodes from '@src/common/HttpStatusCodes';
 import { IReq, IRes } from './types/express/misc';
 import ClasificacionService from '@src/services/ClasificacionService';
 
+async function getClasificacion(req: IReq, res: IRes) {
+    const idPerfume = +req.params.idPerfume;
+    const body: any = req.body;
+    const {idUsuario} = body;
+    try{
+        const clasificacion = await ClasificacionService.getClasificacion(idUsuario, idPerfume);
+        res.status(HttpStatusCodes.OK).json(clasificacion);
+    } catch (error) {
+        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
+    }
+}
+
 async function addClasificacion(req: IReq, res: IRes) {
     const clasificacion = req.body;
     try{
@@ -13,9 +25,9 @@ async function addClasificacion(req: IReq, res: IRes) {
     
 }
 
-async function getClasificaciones(req: IReq, res: IRes) {
+async function getAllClasificaciones(req: IReq, res: IRes) {
     try{
-        const clasificaciones = await ClasificacionService.getClasificaciones();
+        const clasificaciones = await ClasificacionService.getAllClasificaciones(+req.params.idPerfume);
         res.status(HttpStatusCodes.OK).json(clasificaciones);
     } catch (error) {
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
@@ -32,7 +44,8 @@ async function deleteClasificacion(req: IReq, res: IRes) {
 }
 
 export default {
- addClasificacion,
- getClasificaciones,
- deleteClasificacion
+    getClasificacion,
+    addClasificacion,
+    getAllClasificaciones,
+    deleteClasificacion
 } as const;
