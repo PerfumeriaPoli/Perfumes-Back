@@ -118,7 +118,13 @@ clasificacionRouter.post(
 clasificacionRouter.get(
     Paths.Clasificaciones.GetAll,
     checkToken,
-    ClasificacionRoutes.getClasificaciones
+    ClasificacionRoutes.getAllClasificaciones
+)
+
+clasificacionRouter.get(
+    Paths.Clasificaciones.GetOne,
+    checkToken,
+    ClasificacionRoutes.getClasificacion
 )
 
 clasificacionRouter.delete(

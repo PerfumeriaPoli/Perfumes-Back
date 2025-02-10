@@ -38,7 +38,8 @@ export default {
   },
   Clasificaciones: {
     Base: '/clasificaciones',
-    GetAll: '/all',
+    GetAll: '/all/:idPerfume',
+    GetOne: '/:idPerfume',
     Add: '/add',
     Delete: '/delete',
   },
