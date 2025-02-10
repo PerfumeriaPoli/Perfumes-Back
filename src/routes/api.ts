@@ -34,6 +34,12 @@ usuarioRouter.post(
 //* Perfumes
 
 perfumeRouter.get(
+    Paths.Perfumes.GetOne,
+    checkToken,
+    PerfumeRoutes.getPerfume
+);
+
+perfumeRouter.get(
     Paths.Perfumes.GetPorPagina,
     checkToken,
     PerfumeRoutes.getPerfumesPorPagina
