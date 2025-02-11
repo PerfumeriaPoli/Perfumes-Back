@@ -83,6 +83,12 @@ listaRouter.get(
     ListaRoutes.getListas
 )
 
+listaRouter.get(
+    Paths.Listas.GetOne,
+    checkToken,
+    ListaRoutes.getOneLista
+);
+
 listaRouter.post(
     Paths.Listas.Add,
     checkToken,

@@ -34,7 +34,7 @@ export default {
     Add: '/add',
     Delete: '/delete/:idLista',
     AddPerfume: '/addPerfume/:idLista',
-    DeletePerfume: '/deletePerfume/:idLista',
+    DeletePerfume: '/deletePerfume/:idLista/:idPerfume',
   },
   Clasificaciones: {
     Base: '/clasificaciones',
