@@ -4,6 +4,7 @@ import HttpStatusCodes from '@src/common/HttpStatusCodes';
 import Lista from '@src/models/Lista.model';
 import ListaHasPerfume from '@src/models/ListaHasPerfume.model';
 import Perfume from '@src/models/Perfume.model';
+import { get } from 'node:http';
 
 async function getListaPorNombre(nombre: string, idUsuario: number) {
 
@@ -31,7 +32,6 @@ async function getListaPorNombre(nombre: string, idUsuario: number) {
 
 
 async function getListaPorUsuario(idUsuario: number) {
-    console.log('getListaPorUsuario');
     try {
         const listas = await Lista.findAll({
             where: {
@@ -98,6 +98,18 @@ async function addPerfume(idLista: number, perfume: any) {
         if (!lista) {
             throw new Error('Esta lista no existe');
         }
+        if(lista.usuario_idUsuario !== perfume.idUsuario){
+            throw new Error('No podes agregar perfumes a una lista que no te pertenece');
+        }
+        const perfumeExistente = await ListaHasPerfume.findOne({
+            where: {
+                lista_idLista: idLista,
+                perfume_idPerfume: perfume.idPerfume,
+            },
+        });
+        if (perfumeExistente) {
+            throw new Error('Este perfume ya esta en la lista');
+        }
         const result = await ListaHasPerfume.create({
             lista_idLista: idLista,
             perfume_idPerfume: perfume.idPerfume,
@@ -115,14 +127,23 @@ async function getListas(body: any) {
             where: {
                 usuario_idUsuario: idUsuario,
             },
-        });
+            include: [
+                {
+                    model: ListaHasPerfume,
+                    include: [
+                        {
+                            model: Perfume,
+                        }
+                    ]
+                },
+        ]});
         return listas;
     } catch (error) {
         throw new RouteError(HttpStatusCodes.INTERNAL_SERVER_ERROR, error.message);
     }
 }
 
-async function deletePerfume(idLista: number, perfume: any) {
+async function deletePerfume(idLista: number, perfume: any, idPerfume: number) {
     try {
         const lista = await Lista.findOne({
             where: {
@@ -132,13 +153,38 @@ async function deletePerfume(idLista: number, perfume: any) {
         if (!lista) {
             throw new Error('Esta lista no existe');
         }
+        if(lista.usuario_idUsuario !== perfume.idUsuario){
+            throw new Error('No podes eliminar perfumes de una lista que no te pertenece');
+        }
         const result = await ListaHasPerfume.destroy({
             where: {
                 lista_idLista: idLista,
-                perfume_idPerfume: perfume.idPerfume,
+                perfume_idPerfume: idPerfume,
             },
         });
         return result;
+    } catch (error) {
+        throw new RouteError(HttpStatusCodes.INTERNAL_SERVER_ERROR, error.message);
+    }
+}
+
+async function getOneLista(idLista: number) {
+    try {
+        const lista = await Lista.findOne({
+            where: {
+                idLista,
+            },
+            include: [
+                {
+                    model: ListaHasPerfume,
+                    include: [
+                        {
+                            model: Perfume,
+                        }
+                    ]
+                },
+        ]});
+        return lista;
     } catch (error) {
         throw new RouteError(HttpStatusCodes.INTERNAL_SERVER_ERROR, error.message);
     }
@@ -151,4 +197,5 @@ export default {
     addPerfume,
     getListas,
     deletePerfume,
+    getOneLista,
 } as const;

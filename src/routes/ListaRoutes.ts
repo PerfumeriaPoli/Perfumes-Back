@@ -6,7 +6,6 @@ import { get } from 'http';
 
 
 async function getListaPorUsuario(req: IReq, res: IRes) {
-    console.log('getListaPorUsuario');
     try {
         const idUsuario = +req.params.idUsuario;
         const listas = await ListaService.getListaPorUsuario(idUsuario);
@@ -60,9 +59,23 @@ async function getListas(req: IReq, res: IRes) {
 async function deletePerfume(req: IReq, res: IRes) {
     try {
         const idLista = +req.params.idLista;
+        const idPerfume = +req.params.idPerfume;
         const perfume = req.body;
-        const result = await ListaService.deletePerfume(idLista, perfume);
+        const result = await ListaService.deletePerfume(idLista, perfume, idPerfume);
+        if(result === 0){
+            res.status(HttpStatusCodes.NOT_FOUND).json({ error: 'No se encontro el perfume en la lista' });
+        }
         res.status(HttpStatusCodes.OK).json(result);
+    } catch (error) {
+        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+    }
+}
+
+async function getOneLista(req: IReq, res: IRes) {
+    try {
+        const idLista = +req.params.idLista;
+        const lista = await ListaService.getOneLista(idLista);
+        res.status(HttpStatusCodes.OK).json(lista);
     } catch (error) {
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
     }
@@ -75,4 +88,5 @@ export default {
     addPerfume,
     getListas,
     deletePerfume,
+    getOneLista,
 } as const;

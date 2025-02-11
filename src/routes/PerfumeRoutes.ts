@@ -34,6 +34,7 @@ async function updatePerfume(req: IReq, res: IRes) {
     const perfume = req.body;
     const id = +req.params.idPerfume;
     const isAdmin = (req.body as any).isAdmin;
+    console.log(perfume)
     if (!isAdmin) {
         res.status(HttpStatusCodes.UNAUTHORIZED).json({ message: 'Unauthorized' });
         return;

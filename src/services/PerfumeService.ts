@@ -50,14 +50,7 @@ async function addPerfume(perfume: any): Promise<void> {
 async function updatePerfume(id: number, perfume: any): Promise<void> {
     const {nombre, notas} = perfume;
     try {
-        const existe = await Perfume.findOne({
-            where: {
-                nombre: nombre
-            }
-        });
-        if(existe) {
-            throw new Error(HttpStatusCodes.NOT_ACCEPTABLE.toString());
-        }
+        
         await Perfume.update({
             nombre: nombre,
             notas: notas
