@@ -60,7 +60,8 @@ async function deletePerfume(req: IReq, res: IRes) {
 
 async function buscarPerfume(req: IReq, res: IRes) {
     const nombre = req.params.nombre;
-    const perfume = await PerfumeService.buscarPerfume(nombre);
+    const pagina = +req.params.pagina;
+    const perfume = await PerfumeService.buscarPerfume(nombre, pagina);
     res.status(HttpStatusCodes.OK).json(perfume);
 }
 
