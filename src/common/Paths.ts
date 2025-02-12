@@ -20,7 +20,7 @@ export default {
   Perfumes: {
     Base: '/perfumes',
     GetPorPagina: '/all/:pagina',
-    Buscar: '/buscar/:nombre',
+    Buscar: '/buscar/:nombre/:pagina',
     GetOne: '/:idPerfume',
     Add: '/add',
     Update: '/update/:idPerfume',
