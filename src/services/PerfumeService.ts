@@ -4,10 +4,10 @@ import Perfume from '@src/models/Perfume.model';
 import { IPerfume } from '@src/models/Perfume';
 import { Op } from 'sequelize';
 
-async function getPerfume(id: number): Promise<any> {
+async function getPerfume(idPerfume: number): Promise<any> {
     return Perfume.findOne({
         where: {
-            id: id
+            idPerfume: idPerfume
         }
     }).then((perfume: Perfume|null) => {
         if(!perfume) {
@@ -18,7 +18,7 @@ async function getPerfume(id: number): Promise<any> {
 }
 
 async function getPerfumesPorPagina(pagina: number): Promise<Perfume[]> {
-    const limite = 10;
+    const limite = 8;
     const offset = (pagina - 1) * limite;
 
     return await Perfume.findAll({
@@ -50,14 +50,7 @@ async function addPerfume(perfume: any): Promise<void> {
 async function updatePerfume(id: number, perfume: any): Promise<void> {
     const {nombre, notas} = perfume;
     try {
-        const existe = await Perfume.findOne({
-            where: {
-                nombre: nombre
-            }
-        });
-        if(existe) {
-            throw new Error(HttpStatusCodes.NOT_ACCEPTABLE.toString());
-        }
+        
         await Perfume.update({
             nombre: nombre,
             notas: notas

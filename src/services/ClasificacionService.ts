@@ -3,8 +3,16 @@ import UsuarioHasClasificacion from '@src/models/UsuarioHasClasificacion.model';
 import Clasificacion from '@src/models/Clasificacion.model';
 import { get } from 'http';
 
-async function getClasificaciones() {
-    return await Clasificacion.findAll();
+async function getAllClasificaciones(idPerfume: number) {
+    return await UsuarioHasClasificacion.findAll({
+        where: {
+            perfume_idPerfume: idPerfume
+            },
+            include: {
+                model: Clasificacion,
+                attributes: ['nombre']
+            }
+        });
 }
 
 async function getClasificacion(idUsuario: number, idPerfume: number) {
@@ -63,7 +71,8 @@ async function deleteClasificacion(clasificacion: any) {
 }
 
 export default {
+    getClasificacion,
     addClasificacion,
-    getClasificaciones,
+    getAllClasificaciones,
     deleteClasificacion,
 } as const;
