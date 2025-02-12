@@ -4,8 +4,8 @@ import { IReq, IRes } from './types/express/misc';
 import PerfumeService from '@src/services/PerfumeService';
 
 async function getPerfume(req: IReq, res: IRes) {
-    const id = +req.params.id;
-    const perfume = await PerfumeService.getPerfume(id);
+    const idPerfume = +req.params.idPerfume;
+    const perfume = await PerfumeService.getPerfume(idPerfume);
     res.status(HttpStatusCodes.OK).json(perfume);
 }
 
@@ -34,6 +34,7 @@ async function updatePerfume(req: IReq, res: IRes) {
     const perfume = req.body;
     const id = +req.params.idPerfume;
     const isAdmin = (req.body as any).isAdmin;
+    console.log(perfume)
     if (!isAdmin) {
         res.status(HttpStatusCodes.UNAUTHORIZED).json({ message: 'Unauthorized' });
         return;
