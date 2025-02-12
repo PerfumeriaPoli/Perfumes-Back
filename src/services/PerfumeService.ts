@@ -72,13 +72,17 @@ async function deletePerfume(id: number): Promise<void> {
     });
 }
 
-async function buscarPerfume(nombre: string): Promise<Perfume[]> {
+async function buscarPerfume(nombre: string, pagina: number): Promise<Perfume[]> {
+    const limite = 8;
+    const offset = (pagina - 1) * limite;
     return await Perfume.findAll({
+        limit: limite,
         where: {
             nombre: {
                 [Op.like]: `%${nombre}%`
             }
-        }
+        },
+        offset: offset,
     });
 }
 
