@@ -19,7 +19,7 @@ async function getPerfume(idPerfume: number): Promise<any> {
 
 async function getPerfumesPorPagina(pagina: number): Promise<Perfume[]> {
     const limite = 8;
-    const offset = (pagina - 1) * limite;
+    const offset = (pagina - 1) * limite; //cambio de posicion de inicio de la busqueda
 
     return await Perfume.findAll({
         limit: limite,
