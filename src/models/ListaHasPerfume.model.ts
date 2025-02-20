@@ -27,7 +27,10 @@ export class ListaHasPerfume extends Model {
   })
   lista!: Lista;
 
-  @BelongsTo(() => Perfume)
+  @BelongsTo(() => Perfume,{
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+})
   perfume!: Perfume;
 }
 

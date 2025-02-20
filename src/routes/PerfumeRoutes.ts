@@ -43,7 +43,7 @@ async function updatePerfume(req: IReq, res: IRes) {
         await PerfumeService.updatePerfume(id,perfume);
         res.status(HttpStatusCodes.OK).json({ message: 'Perfume updated' });
     } catch (error) {
-        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Perfume das ese nombre ya existe' });
+        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({ error });
     }
 }
 

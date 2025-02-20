@@ -3,6 +3,7 @@ import HttpStatusCodes from '@src/common/HttpStatusCodes';
 import Perfume from '@src/models/Perfume.model';
 import { IPerfume } from '@src/models/Perfume';
 import { Op } from 'sequelize';
+import Usuario from '@src/models/Usuario.model';
 
 async function getPerfume(idPerfume: number): Promise<any> {
     return Perfume.findOne({
@@ -49,6 +50,15 @@ async function addPerfume(perfume: any): Promise<void> {
 
 async function updatePerfume(id: number, perfume: any): Promise<void> {
     const {nombre, notas} = perfume;
+    const adminUsuario = await Usuario.findOne({
+        where: {
+            idUsuario: perfume.idUsuario,
+            isAdmin: true
+        }
+    });
+    if (!adminUsuario) {
+        throw new Error(HttpStatusCodes.UNAUTHORIZED.toString());
+    }
     try {
         
         await Perfume.update({
